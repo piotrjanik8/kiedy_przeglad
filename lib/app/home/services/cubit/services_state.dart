@@ -2,7 +2,7 @@ part of 'services_cubit.dart';
 
 @immutable
 class ServicesState {
-  final List<QueryDocumentSnapshot<Map<String, dynamic>>> documents;
+  final List<ServiceModel> documents;
   final bool isLoading;
   final String errorMessage;
 

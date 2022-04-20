@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:kiedy_przeglad/models/service_model.dart';
 import 'package:meta/meta.dart';
 
 part 'services_state.dart';
@@ -33,9 +34,18 @@ class ServicesCubit extends Cubit<ServicesState> {
         .collection('services')
         .snapshots()
         .listen((data) {
+      final serviceModels = data.docs.map(
+        (doc) {
+          return ServiceModel(
+            date: (doc['date'] as Timestamp).toDate(),
+            mileage: doc['mileage'],
+            name: doc['name'],
+          );
+        },
+      ).toList();
       emit(
         ServicesState(
-          documents: data.docs,
+          documents: serviceModels,
           isLoading: false,
           errorMessage: '',
         ),

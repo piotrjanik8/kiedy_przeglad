@@ -34,10 +34,11 @@ class Services extends StatelessWidget {
             );
           }
 
-          final documents = state.documents;
+          final serviceModels = state.documents;
+
           return ListView(
             children: [
-              for (final document in documents) ...[
+              for (final serviceModel in serviceModels) ...[
                 Container(
                   margin: const EdgeInsets.all(10),
                   padding: const EdgeInsets.all(10),
@@ -52,14 +53,14 @@ class Services extends StatelessWidget {
                               ' dni'), //metoda obliczająca dni do przeglądu
                           const Text('lub'),
                           Text('za ' +
-                              document['mileage'].toString() +
+                              serviceModel.mileage +
                               ' km'), //metoda obliczająca pozostały przebieg
                         ],
                       ),
                       const SizedBox(height: 10),
                       Center(
                         child: Text(
-                          document['name'],
+                          serviceModel.name,
                           style: GoogleFonts.lato(
                             fontSize: 20,
                             color: Colors.purple,
@@ -70,16 +71,12 @@ class Services extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          Text((document['date'] as Timestamp)
-                              .toDate()
-                              .toString()),
+                          Text(serviceModel.date.toString()),
                           //dodać metodę z intl do wyśwl tylko daty
-                          Text('Przebieg: ' +
-                              document['mileage'].toString() +
-                              ' km'),
+                          Text('Przebieg: ' + serviceModel.mileage + ' km'),
                         ],
                       ),
-                      Text(document['date'].toString()),
+                      Text(serviceModel.date.toString()),
                     ],
                   ),
                 ),

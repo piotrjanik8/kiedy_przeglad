@@ -22,7 +22,7 @@ class AddMileagePage extends StatelessWidget {
           ),
         ],
       ),
-      body: Center(
+      body: const Center(
         child: Text('Aktualny przebieg:'),
       ),
     );
