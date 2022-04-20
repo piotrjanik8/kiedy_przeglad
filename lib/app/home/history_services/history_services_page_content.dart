@@ -8,7 +8,7 @@ class Calendar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Center(
-      child: Text('kalendarz'),
+      child: Text('historia napraw'),
     );
   }
 }

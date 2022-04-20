@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:kiedy_przeglad/app/home/add/add_service.dart';
-import 'package:kiedy_przeglad/app/home/calendar/calendar.dart';
-import 'package:kiedy_przeglad/app/home/services/services.dart';
+import 'package:kiedy_przeglad/app/add_milage/add_milage.dart';
+import 'package:kiedy_przeglad/app/home/add_service/add_service_page_content.dart';
+import 'package:kiedy_przeglad/app/home/history_services/history_services_page_content.dart';
+import 'package:kiedy_przeglad/app/home/services/services_page_content.dart';
 import 'package:kiedy_przeglad/auth/user_profile.dart';
 
 class HomePage extends StatefulWidget {
@@ -33,13 +34,26 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => const AddMileagePage(),
+              fullscreenDialog: true,
+            ),
+          );
+        },
+        tooltip: 'Wpisz aktualny przebieg',
+        label: const Text('Dodaj aktualny przebieg'),
+        icon: const Icon(Icons.add),
+      ),
       body: Builder(
         builder: (context) {
           if (currentIndex == 0) {
             return const Services();
           }
           if (currentIndex == 1) {
-            return const AddService();
+            // return AddService();
           }
           return const Calendar();
         },
@@ -65,11 +79,6 @@ class _HomePageState extends State<HomePage> {
             label: 'Historia napraw',
           ),
         ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        tooltip: 'Wpisz aktualny przebieg',
-        child: const Icon(Icons.add),
       ),
     );
   }
