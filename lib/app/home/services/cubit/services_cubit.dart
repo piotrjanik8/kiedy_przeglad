@@ -1,14 +1,14 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:kiedy_przeglad/models/service_model.dart';
+import 'package:kiedy_przeglad/repositories/services_repository.dart';
 import 'package:meta/meta.dart';
 
 part 'services_state.dart';
 
 class ServicesCubit extends Cubit<ServicesState> {
-  ServicesCubit()
+  ServicesCubit(this._servicesRepository)
       : super(
           const ServicesState(
             documents: [],
@@ -17,7 +17,9 @@ class ServicesCubit extends Cubit<ServicesState> {
           ),
         );
 
-  StreamSubscription? _streamSubscription;
+  final ServicesRepository _servicesRepository;
+
+  StreamSubscription? _streamSubscription; 
 
   Future<void> start() async {
     emit(
@@ -28,24 +30,12 @@ class ServicesCubit extends Cubit<ServicesState> {
       ),
     );
 
-    _streamSubscription = FirebaseFirestore.instance
-        .collection('users')
-        .doc('dk47EUIsFuZtjjcdWSBB0tVdfRz1') //zamienić na userID
-        .collection('services')
-        .snapshots()
+    _streamSubscription = _servicesRepository.getServicesStream()
         .listen((data) {
-      final serviceModels = data.docs.map(
-        (doc) {
-          return ServiceModel(
-            date: (doc['date'] as Timestamp).toDate(),
-            mileage: doc['mileage'],
-            name: doc['name'],
-          );
-        },
-      ).toList();
+      
       emit(
         ServicesState(
-          documents: serviceModels,
+          documents: data,
           isLoading: false,
           errorMessage: '',
         ),

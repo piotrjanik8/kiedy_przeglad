@@ -1,9 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kiedy_przeglad/app/home/services/cubit/services_cubit.dart';
+import 'package:kiedy_przeglad/repositories/services_repository.dart';
 
 class Services extends StatelessWidget {
   const Services({
@@ -17,7 +17,7 @@ class Services extends StatelessWidget {
       throw Exception('User is not logged in');
     }
     return BlocProvider(
-      create: (context) => ServicesCubit()..start(),
+      create: (context) => ServicesCubit(ServicesRepository())..start(),
       child: BlocBuilder<ServicesCubit, ServicesState>(
         builder: (context, state) {
           if (state.errorMessage.isNotEmpty) {
@@ -53,7 +53,7 @@ class Services extends StatelessWidget {
                               ' dni'), //metoda obliczająca dni do przeglądu
                           const Text('lub'),
                           Text('za ' +
-                              serviceModel.mileage +
+                              serviceModel.mileage.toString() +
                               ' km'), //metoda obliczająca pozostały przebieg
                         ],
                       ),
@@ -73,7 +73,9 @@ class Services extends StatelessWidget {
                         children: [
                           Text(serviceModel.date.toString()),
                           //dodać metodę z intl do wyśwl tylko daty
-                          Text('Przebieg: ' + serviceModel.mileage + ' km'),
+                          Text('Przebieg: ' +
+                              serviceModel.mileage.toString() +
+                              ' km'),
                         ],
                       ),
                       Text(serviceModel.date.toString()),
