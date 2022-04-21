@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:kiedy_przeglad/app/home/add_service/cubit/add_cubit.dart';
+import 'package:kiedy_przeglad/app/home/home_page.dart';
 import 'package:kiedy_przeglad/repositories/services_repository.dart';
 
 class AddService extends StatefulWidget {
@@ -13,9 +14,9 @@ class AddService extends StatefulWidget {
 }
 
 class _AddServiceState extends State<AddService> {
-  String? _name;
-  int? _mileage;
-  DateTime? _date;
+  String? name;
+  int? mileage;
+  DateTime? date;
 
   @override
   Widget build(BuildContext context) {
@@ -37,45 +38,24 @@ class _AddServiceState extends State<AddService> {
         },
         child: BlocBuilder<AddCubit, AddState>(
           builder: (context, state) {
-            return Scaffold(
-              appBar: AppBar(
-                title: const Text('Add new upcoming title'),
-                actions: [
-                  IconButton(
-                    onPressed:
-                        _name == null || _mileage == null || _date == null
-                            ? null
-                            : () {
-                                context.read<AddCubit>().add(
-                                      _name!,
-                                      _mileage!,
-                                      _date!,
-                                    );
-                              },
-                    icon: const Icon(Icons.check),
-                  ),
-                ],
-              ),
-              body: _AddPageBody(
-                onNameChanged: (newValue) {
-                  setState(() {
-                    _name = newValue;
-                  });
-                },
-                onMileageChanged: (newValue) {
-                  setState(() {
-                    _mileage = int.parse(newValue);
-                  });
-                },
-                onDateChanged: (newValue) {
-                  setState(() {
-                    _date = newValue;
-                  });
-                },
-                selectedDateFormatted: _date == null
-                    ? null
-                    : DateFormat.yMMMMEEEEd().format(_date!),
-              ),
+            return _AddPageBody(
+              onNameChanged: (newValue) {
+                setState(() {
+                  name = newValue;
+                });
+              },
+              onMileageChanged: (newValue) {
+                setState(() {
+                  mileage = int.parse(newValue);
+                });
+              },
+              onDateChanged: (newValue) {
+                setState(() {
+                  date = newValue;
+                });
+              },
+              selectedDateFormatted:
+                  date == null ? null : DateFormat.yMMMMEEEEd().format(date!),
             );
           },
         ),
@@ -140,9 +120,14 @@ class _AddPageBody extends StatelessWidget {
           },
           child: Text(selectedDateFormatted ?? 'Wybierz datę'),
         ),
-        TextButton(
+        const SizedBox(height: 20),
+        ElevatedButton(
           onPressed: () {
-            
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (_) => const HomePage(),
+              ),
+            );
           },
           child: const Text('Zapisz'),
         ),
