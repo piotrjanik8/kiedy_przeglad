@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class Calendar extends StatelessWidget {
-  const Calendar({
+class PerformedServices extends StatelessWidget {
+  const PerformedServices({
     Key? key,
   }) : super(key: key);
 

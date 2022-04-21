@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -12,10 +11,6 @@ class Services extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userID = FirebaseAuth.instance.currentUser?.uid;
-    if (userID == null) {
-      throw Exception('User is not logged in');
-    }
     return BlocProvider(
       create: (context) => ServicesCubit(ServicesRepository())..start(),
       child: BlocBuilder<ServicesCubit, ServicesState>(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kiedy_przeglad/app/add_milage/add_milage.dart';
-import 'package:kiedy_przeglad/app/home/history_services/history_services_page_content.dart';
+import 'package:kiedy_przeglad/app/home/add_service/add_service_page_content.dart';
+import 'package:kiedy_przeglad/app/home/performed_services/performed_services_page_content.dart';
 import 'package:kiedy_przeglad/app/home/services/services_page_content.dart';
 import 'package:kiedy_przeglad/auth/user_profile.dart';
 
@@ -52,9 +53,9 @@ class _HomePageState extends State<HomePage> {
             return const Services();
           }
           if (currentIndex == 1) {
-            // return AddService();
+            return const AddService();
           }
-          return const Calendar();
+          return const PerformedServices();
         },
       ),
       bottomNavigationBar: BottomNavigationBar(
