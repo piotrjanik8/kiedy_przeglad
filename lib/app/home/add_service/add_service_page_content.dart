@@ -17,6 +17,7 @@ class _AddServiceState extends State<AddService> {
   String? name;
   int? mileage;
   DateTime? date;
+  bool finished = false;
 
   @override
   Widget build(BuildContext context) {
@@ -123,6 +124,7 @@ class _AddPageBody extends StatelessWidget {
         const SizedBox(height: 20),
         ElevatedButton(
           onPressed: () {
+            
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (_) => const HomePage(),

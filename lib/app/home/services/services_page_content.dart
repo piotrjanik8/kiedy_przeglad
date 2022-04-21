@@ -34,49 +34,55 @@ class Services extends StatelessWidget {
           return ListView(
             children: [
               for (final serviceModel in serviceModels) ...[
-                Container(
-                  margin: const EdgeInsets.all(10),
-                  padding: const EdgeInsets.all(10),
-                  color: const Color.fromARGB(255, 9, 255, 0),
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          const Text('Za ' +
-                              '0' +
-                              ' dni'), //metoda obliczająca dni do przeglądu
-                          const Text('lub'),
-                          Text('za ' +
-                              serviceModel.mileage.toString() +
-                              ' km'), //metoda obliczająca pozostały przebieg
-                        ],
-                      ),
-                      const SizedBox(height: 10),
-                      Center(
-                        child: Text(
+                if (serviceModel.finished)
+                  const SizedBox.shrink()
+                else
+                  Container(
+                    margin: const EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
+                    color: Color.fromARGB(139, 0, 208, 255),
+                    child: Column(
+                      children: [
+                        Center(
+                          child: Text(
+                            'Pozostało ${serviceModel.daysLeft()} dni lub ${serviceModel.mileageLeft()} km', //dodać metodę z intl do wyśwl pozostałego czasu i przebiegu
+                            style: GoogleFonts.lato(
+                              fontSize: 15,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        Text(
                           serviceModel.name,
                           style: GoogleFonts.lato(
                             fontSize: 20,
-                            color: Colors.purple,
                           ),
                         ),
-                      ),
-                      const SizedBox(height: 10),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Text(serviceModel.date.toString()),
-                          //dodać metodę z intl do wyśwl tylko daty
-                          Text('Przebieg: ' +
-                              serviceModel.mileage.toString() +
-                              ' km'),
-                        ],
-                      ),
-                      Text(serviceModel.date.toString()),
-                    ],
+                        const SizedBox(height: 10),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              serviceModel.date.toString(),
+                              style: GoogleFonts.lato(
+                                fontSize: 15,
+                                color: Color.fromARGB(255, 126, 126, 126),
+                              ),
+                            ),
+                            Text(
+                              'Przebieg: ' +
+                                  serviceModel.mileage.toString() +
+                                  ' km',
+                              style: GoogleFonts.lato(
+                                fontSize: 15,
+                                color: Color.fromARGB(255, 91, 87, 87),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                ),
               ],
             ],
           );

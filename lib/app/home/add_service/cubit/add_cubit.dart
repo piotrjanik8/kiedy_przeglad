@@ -13,9 +13,10 @@ class AddCubit extends Cubit<AddState> {
     String name,
     int mileage,
     DateTime date,
+    bool finished,
   ) async {
     try {
-      await _servicesRepository.add(name, mileage, date);
+      await _servicesRepository.add(name, mileage, date, finished);
 
       emit(const AddState(saved: true));
     } catch (error) {

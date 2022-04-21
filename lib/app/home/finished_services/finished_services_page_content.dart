@@ -34,49 +34,34 @@ class FinishedServices extends StatelessWidget {
           return ListView(
             children: [
               for (final serviceModel in serviceModels) ...[
-                Container(
-                  margin: const EdgeInsets.all(10),
-                  padding: const EdgeInsets.all(10),
-                  color: const Color.fromARGB(255, 9, 255, 0),
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          const Text('Za ' +
-                              '0' +
-                              ' dni'), //metoda obliczająca dni do przeglądu
-                          const Text('lub'),
-                          Text('za ' +
-                              serviceModel.mileage.toString() +
-                              ' km'), //metoda obliczająca pozostały przebieg
-                        ],
-                      ),
-                      const SizedBox(height: 10),
-                      Center(
-                        child: Text(
-                          serviceModel.name,
-                          style: GoogleFonts.lato(
-                            fontSize: 20,
-                            color: Colors.purple,
+                if (serviceModel.finished == false)
+                  const SizedBox.shrink()
+                else
+                  Container(
+                    margin: const EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
+                    color: Color.fromARGB(255, 157, 179, 200),
+                    child: Column(
+                      children: [
+                        Center(
+                          child: Text(
+                            serviceModel.name,
+                            style: GoogleFonts.lato(
+                              fontSize: 20,
+                            ),
                           ),
                         ),
-                      ),
-                      const SizedBox(height: 10),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Text(serviceModel.date.toString()),
-                          //dodać metodę z intl do wyśwl tylko daty
-                          Text('Przebieg: ' +
-                              serviceModel.mileage.toString() +
-                              ' km'),
-                        ],
-                      ),
-                      Text(serviceModel.date.toString()),
-                    ],
+                        const SizedBox(height: 10),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Text(serviceModel.date.toString()),
+                            Text(serviceModel.mileage.toString() + ' km'),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                ),
               ],
             ],
           );

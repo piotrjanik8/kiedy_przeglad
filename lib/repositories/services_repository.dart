@@ -20,12 +20,11 @@ class ServicesRepository {
       return querySnapshot.docs.map(
         (doc) {
           return ServiceModel(
-            id: doc.id,
-            date: (doc['date'] as Timestamp).toDate(),
-            mileage: doc['mileage'],
-            name: doc['name'],
-            f
-          );
+              id: doc.id,
+              date: (doc['date'] as Timestamp).toDate(),
+              mileage: doc['mileage'],
+              name: doc['name'],
+              finished: doc['finished']);
         },
       ).toList();
     });
@@ -35,6 +34,7 @@ class ServicesRepository {
     String name,
     int mileage,
     DateTime date,
+    bool finished,
   ) async {
     if (userID == null) {
       throw Exception('User is not logged in');
@@ -48,6 +48,8 @@ class ServicesRepository {
         'name': name,
         'mileage': mileage,
         'date': date,
+        'finished': finished,
+
       },
     );
   }
