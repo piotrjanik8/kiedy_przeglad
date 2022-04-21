@@ -14,6 +14,7 @@ class ServicesRepository {
         .collection('users')
         .doc(userID)
         .collection('services')
+        .orderBy('date')
         .snapshots()
         .map((querySnapshot) {
       return querySnapshot.docs.map(
@@ -23,6 +24,7 @@ class ServicesRepository {
             date: (doc['date'] as Timestamp).toDate(),
             mileage: doc['mileage'],
             name: doc['name'],
+            f
           );
         },
       ).toList();
