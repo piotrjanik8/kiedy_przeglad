@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:kiedy_przeglad/app/home/add_service/cubit/add_cubit.dart';
-import 'package:kiedy_przeglad/app/home/home_page.dart';
+import 'package:kiedy_przeglad/app/home/home_page/home_page.dart';
 import 'package:kiedy_przeglad/repositories/services_repository.dart';
 
 class AddService extends StatefulWidget {

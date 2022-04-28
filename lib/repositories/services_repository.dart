@@ -20,14 +20,48 @@ class ServicesRepository {
       return querySnapshot.docs.map(
         (doc) {
           return ServiceModel(
-              id: doc.id,
-              date: (doc['date'] as Timestamp).toDate(),
-              mileage: doc['mileage'],
-              name: doc['name'],
-              finished: doc['finished']);
+            id: doc.id,
+            date: (doc['date'] as Timestamp).toDate(),
+            mileage: doc['mileage'],
+            name: doc['name'],
+            finished: doc['finished'],
+          );
         },
       ).toList();
     });
+  }
+
+  Future<CurrentMileage> get() async {
+    final doc = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(userID)
+        .collection('current_mileage')
+        .doc()
+        .collection('mileage')
+        .doc('2ZORhguqadI36glvHLpM')
+        .get();
+
+    return CurrentMileage(currentMileage: doc['mileage']);
+  }
+
+  Future<void> enterCurrentMileage({required String newCurrentMileage}) async {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc('dk47EUIsFuZtjjcdWSBB0tVdfRz1')
+        .collection('current_mileage')
+        .doc('2ZORhguqadI36glvHLpM')
+        .set({'mileage': newCurrentMileage});
+  }
+
+  Future<void> delete({
+    required String id,
+  }) {
+    return FirebaseFirestore.instance
+        .collection('users')
+        .doc(userID)
+        .collection('services')
+        .doc(id)
+        .delete();
   }
 
   Future<void> add(
@@ -49,7 +83,6 @@ class ServicesRepository {
         'mileage': mileage,
         'date': date,
         'finished': finished,
-
       },
     );
   }

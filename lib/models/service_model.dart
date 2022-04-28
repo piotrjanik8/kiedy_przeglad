@@ -21,3 +21,12 @@ class ServiceModel {
     return '5000';
   }
 }
+
+class CurrentMileage {
+  CurrentMileage({
+    required this.currentMileage,
+  });
+
+  final String currentMileage;
+  
+}

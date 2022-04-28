@@ -37,50 +37,86 @@ class Services extends StatelessWidget {
                 if (serviceModel.finished)
                   const SizedBox.shrink()
                 else
-                  Container(
-                    margin: const EdgeInsets.all(10),
-                    padding: const EdgeInsets.all(10),
-                    color: Color.fromARGB(139, 0, 208, 255),
-                    child: Column(
-                      children: [
-                        Center(
-                          child: Text(
-                            'Pozostało ${serviceModel.daysLeft()} dni lub ${serviceModel.mileageLeft()} km', //dodać metodę z intl do wyśwl pozostałego czasu i przebiegu
+                  Dismissible(
+                    key: ValueKey(serviceModel.id),
+                    background: const DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: Colors.green,
+                      ),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 25.0),
+                          child: Icon(
+                            Icons.check_box,
+                          ),
+                        ),
+                      ),
+                    ),
+                    secondaryBackground: const DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: Colors.red,
+                      ),
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: Padding(
+                          padding: EdgeInsets.only(right: 25.0),
+                          child: Icon(
+                            Icons.delete,
+                          ),
+                        ),
+                      ),
+                    ),
+                    onDismissed: (direction) {
+                      context
+                          .read<ServicesRepository>()
+                          .delete(id: serviceModel.id);
+                    },
+                    child: Container(
+                      margin: const EdgeInsets.all(10),
+                      padding: const EdgeInsets.all(10),
+                      color: const Color.fromARGB(139, 0, 208, 255),
+                      child: Column(
+                        children: [
+                          Center(
+                            child: Text(
+                              'Pozostało ${serviceModel.daysLeft()} dni lub ${serviceModel.mileageLeft()} km', //dodać metodę z intl do wyśwl pozostałego czasu i przebiegu
+                              style: GoogleFonts.lato(
+                                fontSize: 15,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          Text(
+                            serviceModel.name,
                             style: GoogleFonts.lato(
-                              fontSize: 15,
+                              fontSize: 20,
                             ),
                           ),
-                        ),
-                        const SizedBox(height: 10),
-                        Text(
-                          serviceModel.name,
-                          style: GoogleFonts.lato(
-                            fontSize: 20,
+                          const SizedBox(height: 10),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                serviceModel.date.toString(),
+                                style: GoogleFonts.lato(
+                                  fontSize: 15,
+                                  color: Color.fromARGB(255, 126, 126, 126),
+                                ),
+                              ),
+                              Text(
+                                'Przebieg: ' +
+                                    serviceModel.mileage.toString() +
+                                    ' km',
+                                style: GoogleFonts.lato(
+                                  fontSize: 15,
+                                  color: Color.fromARGB(255, 91, 87, 87),
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                        const SizedBox(height: 10),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              serviceModel.date.toString(),
-                              style: GoogleFonts.lato(
-                                fontSize: 15,
-                                color: Color.fromARGB(255, 126, 126, 126),
-                              ),
-                            ),
-                            Text(
-                              'Przebieg: ' +
-                                  serviceModel.mileage.toString() +
-                                  ' km',
-                              style: GoogleFonts.lato(
-                                fontSize: 15,
-                                color: Color.fromARGB(255, 91, 87, 87),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
               ],
