@@ -47,7 +47,7 @@ class ServicesRepository {
   Future<void> enterCurrentMileage({required String newCurrentMileage}) async {
     await FirebaseFirestore.instance
         .collection('users')
-        .doc('dk47EUIsFuZtjjcdWSBB0tVdfRz1')
+        .doc(userID)
         .collection('current_mileage')
         .doc('2ZORhguqadI36glvHLpM')
         .set({'mileage': newCurrentMileage});
@@ -68,7 +68,6 @@ class ServicesRepository {
     String name,
     int mileage,
     DateTime date,
-    bool finished,
   ) async {
     if (userID == null) {
       throw Exception('User is not logged in');
@@ -82,7 +81,7 @@ class ServicesRepository {
         'name': name,
         'mileage': mileage,
         'date': date,
-        'finished': finished,
+        'finished': false,
       },
     );
   }
