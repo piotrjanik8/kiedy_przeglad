@@ -6,7 +6,7 @@ class ServicesState {
   final bool isLoading;
   final String errorMessage;
 
-  const ServicesState({
+  const ServicesState( {
     required this.documents,
     required this.isLoading,
     required this.errorMessage,

@@ -68,9 +68,17 @@ class Services extends StatelessWidget {
                       ),
                     ),
                     onDismissed: (direction) {
-                      context
-                          .read<ServicesRepository>()
-                          .delete(id: serviceModel.id);
+                      if (direction == DismissDirection.startToEnd) {
+                        context.read<ServicesCubit>().finished(
+                            documentID: serviceModel.id,
+                            date: serviceModel.date,
+                            mileage: serviceModel.mileage,
+                            name: serviceModel.name);
+                      } else if (direction == DismissDirection.endToStart) {
+                        context
+                            .read<ServicesCubit>()
+                            .remove(documentID: serviceModel.id);
+                      }
                     },
                     child: Container(
                       margin: const EdgeInsets.all(10),
@@ -80,7 +88,7 @@ class Services extends StatelessWidget {
                         children: [
                           Center(
                             child: Text(
-                              'Pozostało ${serviceModel.daysLeft()} dni lub ${serviceModel.mileageLeft()} km', //dodać metodę z intl do wyśwl pozostałego czasu i przebiegu
+                              'Pozostało ${serviceModel.daysLeft()} dni lub ${serviceModel.mileageLeft()} km', //dodać metodę do wyśwl pozostałego czasu i przebiegu
                               style: GoogleFonts.lato(
                                 fontSize: 15,
                               ),
@@ -101,7 +109,8 @@ class Services extends StatelessWidget {
                                 serviceModel.date.toString(),
                                 style: GoogleFonts.lato(
                                   fontSize: 15,
-                                  color: Color.fromARGB(255, 126, 126, 126),
+                                  color:
+                                      const Color.fromARGB(255, 126, 126, 126),
                                 ),
                               ),
                               Text(
@@ -110,7 +119,7 @@ class Services extends StatelessWidget {
                                     ' km',
                                 style: GoogleFonts.lato(
                                   fontSize: 15,
-                                  color: Color.fromARGB(255, 91, 87, 87),
+                                  color: const Color.fromARGB(255, 91, 87, 87),
                                 ),
                               ),
                             ],

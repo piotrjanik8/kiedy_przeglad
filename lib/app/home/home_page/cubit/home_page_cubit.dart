@@ -6,12 +6,17 @@ part 'home_page_state.dart';
 
 class HomePageCubit extends Cubit<HomePageState> {
   HomePageCubit(this._servicesRepository)
-      : super(HomePageState(currentMileage: null));
+      : super(HomePageState());
 
   final ServicesRepository _servicesRepository;
 
   Future<void> getCurrentMileage() async {
-    final currentMileage = await _servicesRepository.get();
+    final currentMileage = await _servicesRepository.getMilleage();
     emit(HomePageState(currentMileage: currentMileage));
   }
 }
+
+// class HomePageCubit extends Cubit<HomePageState> {          //do usunięcia jak kod wyżej uruchomię
+//   HomePageCubit()
+//       : super(HomePageState());
+// }

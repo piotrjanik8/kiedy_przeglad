@@ -6,7 +6,6 @@ import 'package:kiedy_przeglad/app/home/finished_services/finished_services_page
 import 'package:kiedy_przeglad/app/home/home_page/cubit/home_page_cubit.dart';
 import 'package:kiedy_przeglad/app/home/services/services_page_content.dart';
 import 'package:kiedy_przeglad/auth/user_profile.dart';
-import 'package:kiedy_przeglad/models/service_model.dart';
 import 'package:kiedy_przeglad/repositories/services_repository.dart';
 
 class HomePage extends StatefulWidget {
@@ -24,12 +23,15 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => HomePageCubit(ServicesRepository()),
+      create: (context) =>
+          HomePageCubit(ServicesRepository())..getCurrentMileage(),
       child: BlocBuilder<HomePageCubit, HomePageState>(
         builder: (context, state) {
           return Scaffold(
             appBar: AppBar(
-              title: Text('Aktualny przebieg: ${state.currentMileage} km'),
+              // title: state.currentMileage == null
+              //     ? null
+              //     : Text('Aktualny przebieg: ${state.currentMileage} km'),
               actions: [
                 IconButton(
                   onPressed: () {

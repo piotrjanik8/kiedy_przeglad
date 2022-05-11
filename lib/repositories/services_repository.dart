@@ -31,7 +31,7 @@ class ServicesRepository {
     });
   }
 
-  Future<CurrentMileage> get() async {
+  Future<CurrentMileage> getMilleage() async {
     final doc = await FirebaseFirestore.instance
         .collection('users')
         .doc(userID)
@@ -44,10 +44,29 @@ class ServicesRepository {
     return CurrentMileage(currentMileage: doc['mileage']);
   }
 
-  Future<void> enterCurrentMileage({required String newCurrentMileage}) async {
+  Future<void> saveFinished({
+    required String id,
+    required String name,
+    required int mileage,
+    required DateTime date,
+  }) async {
     await FirebaseFirestore.instance
         .collection('users')
-        .doc('dk47EUIsFuZtjjcdWSBB0tVdfRz1')
+        .doc(userID)
+        .collection('services')
+        .doc(id)
+        .set({
+      'name': name,
+      'mileage': mileage,
+      'date': date,
+      'finished': true,
+    });
+  }
+
+  Future<void> addCurrentMileage({required String newCurrentMileage}) async {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(userID)
         .collection('current_mileage')
         .doc('2ZORhguqadI36glvHLpM')
         .set({'mileage': newCurrentMileage});
@@ -68,7 +87,6 @@ class ServicesRepository {
     String name,
     int mileage,
     DateTime date,
-    bool finished,
   ) async {
     if (userID == null) {
       throw Exception('User is not logged in');
@@ -82,7 +100,7 @@ class ServicesRepository {
         'name': name,
         'mileage': mileage,
         'date': date,
-        'finished': finished,
+        'finished': false,
       },
     );
   }

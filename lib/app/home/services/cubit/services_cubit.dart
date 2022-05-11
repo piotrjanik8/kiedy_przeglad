@@ -52,6 +52,39 @@ class ServicesCubit extends Cubit<ServicesState> {
       });
   }
 
+  Future<void> remove({required String documentID}) async {
+    try {
+      await _servicesRepository.delete(id: documentID);
+    } catch (error) {
+      emit(
+        ServicesState(
+            documents: const [],
+            isLoading: false,
+            errorMessage: error.toString(),
+          ),
+      );
+      start();
+    }
+  }
+
+Future<void> finished({required String documentID,
+    required String name,
+    required int mileage,
+    required DateTime date,}) async {
+    try {
+      await _servicesRepository.saveFinished(id: documentID, date: date, mileage: mileage, name: name);
+    } catch (error) {
+      emit(
+        ServicesState(
+            documents: const [],
+            isLoading: false,
+            errorMessage: error.toString(),
+          ),
+      );
+      start();
+    }
+  }
+
   @override
   Future<void> close() {
     _streamSubscription?.cancel();

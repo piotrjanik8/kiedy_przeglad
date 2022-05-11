@@ -40,7 +40,7 @@ class FinishedServices extends StatelessWidget {
                   Container(
                     margin: const EdgeInsets.all(10),
                     padding: const EdgeInsets.all(10),
-                    color: Color.fromARGB(255, 157, 179, 200),
+                    color: const Color.fromARGB(255, 157, 179, 200),
                     child: Column(
                       children: [
                         Center(

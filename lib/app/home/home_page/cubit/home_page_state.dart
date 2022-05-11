@@ -1,7 +1,7 @@
 part of 'home_page_cubit.dart';
 
 class HomePageState {
-  HomePageState({required this.currentMileage});
+  HomePageState({currentMileage});
 
-  final CurrentMileage? currentMileage;
+  
 }
