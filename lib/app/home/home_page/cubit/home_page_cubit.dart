@@ -1,22 +1,61 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
-import 'package:kiedy_przeglad/models/service_model.dart';
-import 'package:kiedy_przeglad/repositories/services_repository.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:meta/meta.dart';
 
 part 'home_page_state.dart';
 
 class HomePageCubit extends Cubit<HomePageState> {
-  HomePageCubit(this._servicesRepository)
-      : super(HomePageState());
+  HomePageCubit()
+      : super(
+          const HomePageState(
+            documents: [],
+            errorMessage: '',
+            isLoading: false,
+          ),
+        );
 
-  final ServicesRepository _servicesRepository;
+  StreamSubscription? _streamSubscription;
 
-  Future<void> getCurrentMileage() async {
-    final currentMileage = await _servicesRepository.getMilleage();
-    emit(HomePageState(currentMileage: currentMileage));
+  Future<void> getMileage() async {
+    emit(
+      const HomePageState(
+        documents: [],
+        errorMessage: '',
+        isLoading: true,
+      ),
+    );
+
+    _streamSubscription = FirebaseFirestore.instance
+        .collection('users')
+        .doc('dk47EUIsFuZtjjcdWSBB0tVdfRz1')
+        .collection('current_mileage')
+        .snapshots()
+        .listen(
+      (data) {
+        emit(
+          HomePageState(
+            documents: data.docs,
+            errorMessage: '',
+            isLoading: false,
+          ),
+        );
+      },
+    )..onError((error) {
+        emit(
+          HomePageState(
+            documents: const [],
+            errorMessage: error.toString(),
+            isLoading: false,
+          ),
+        );
+      });
+  }
+
+  @override
+  Future<void> close() {
+    _streamSubscription?.cancel();
+    return super.close();
   }
 }
-
-// class HomePageCubit extends Cubit<HomePageState> {          //do usunięcia jak kod wyżej uruchomię
-//   HomePageCubit()
-//       : super(HomePageState());
-// }

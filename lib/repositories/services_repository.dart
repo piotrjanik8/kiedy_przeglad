@@ -31,18 +31,40 @@ class ServicesRepository {
     });
   }
 
-  Future<CurrentMileage> getMilleage() async {
-    final doc = await FirebaseFirestore.instance
+  Stream<List<CurrentMileage>> getMilleage() {
+    if (userID == null) {
+      throw Exception('User is not logged in');
+    }
+
+    return FirebaseFirestore.instance
         .collection('users')
         .doc(userID)
-        .collection('current_mileage')
-        .doc()
-        .collection('mileage')
-        .doc('2ZORhguqadI36glvHLpM')
-        .get();
-
-    return CurrentMileage(currentMileage: doc['mileage']);
+        .collection('services')
+        .orderBy('date')
+        .snapshots()
+        .map((querySnapshot) {
+      return querySnapshot.docs.map(
+        (doc) {
+          return CurrentMileage(
+            currentMileage: doc['mileage'],
+          );
+        },
+      ).toList();
+    });
   }
+
+  // Future<CurrentMileage> getMilleage() async {
+  //   final doc = await FirebaseFirestore.instance
+  //       .collection('users')
+  //       .doc(userID)
+  //       .collection('current_mileage')
+  //       .doc()
+  //       .collection('mileage')
+  //       .doc('2ZORhguqadI36glvHLpM')
+  //       .get();
+
+  //   return CurrentMileage(currentMileage: doc['mileage']);
+  // }
 
   Future<void> saveFinished({
     required String id,
