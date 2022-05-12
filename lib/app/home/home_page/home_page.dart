@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> {
           child: BlocBuilder<HomePageCubit, HomePageState>(
             builder: (context, state) {
               if (state.errorMessage.isNotEmpty) {
-                return Text(state.errorMessage); //error.toString()
+                return Text(state.errorMessage);
               }
               if (state.isLoading) {
                 return const Text('Loading');

@@ -131,11 +131,11 @@ class _AddPageBody extends StatelessWidget {
                   onDateChanged == null
               ? null
               : () {
-                  // context.read<AddCubit>().add(
-                  //       onNameChanged,
-                  //       onMileageChanged,
-                  //       onDateChanged,
-                  //     );
+                  context.read<AddCubit>().add(
+                        onNameChanged,
+                        onMileageChanged,
+                        onDateChanged,
+                      );
                 },
           child: const Text('Zapisz'),
         ),
